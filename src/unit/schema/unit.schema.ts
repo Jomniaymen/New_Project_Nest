@@ -1,22 +1,22 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
+import { Pond } from '../../pond/schema/Pond.schema';
+import { types } from 'util';
 
-const UnitSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  phase: { type: Schema.Types.ObjectId, ref: 'Phase', required: true },
-  numberOfLines: {
-    type: Number,
-    required: true,
-  },
-  lines: [{ type: Schema.Types.ObjectId, ref: 'Line' }], // Array of line references
-  surfaceArea: {
-    type: Number,
-    required: true,
-  },
-});
+@Schema()
+export class Unit extends Document {
+  @Prop({ required: true })
+  Units: string; 
+  
+  @Prop({ required: true })
+  name: string; // "Ph1-U1", "Ph1-U2", etc.
 
-module.exports = mongoose.model('Unit', UnitSchema);
+  @Prop({ required: true })
+  surfaceArea: number; // in hectares
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Pond' }] })
+  ponds: Pond[];
+  static Units: any;
+}
+
+export const UnitSchema = SchemaFactory.createForClass(Unit);

@@ -8,7 +8,7 @@ export class untidto{
   
     @IsNumber()
     @Prop({ required: true })
-    numberOfUnits: number;
+    numberUnit: number;
   
     @Prop({ type: [String], required: true })
     ponds: string[];

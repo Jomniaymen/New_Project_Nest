@@ -4,10 +4,10 @@ import { Document } from 'mongoose';
 @Schema()
 export class Pond extends Document {
   @Prop({ required: true })
-  name: string;
+  name: string; 
 
   @Prop({ required: true })
-  pondArea: number;
+  area: number; 
 }
 
 export const PondSchema = SchemaFactory.createForClass(Pond);

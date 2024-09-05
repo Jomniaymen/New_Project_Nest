@@ -1,30 +1,63 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, Param } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Phase, PhaseDocument } from './schemas/phase.schema';
-import { CreatePhaseDto } from './schemas/phase.dto';
+import { Phase } from './schemas/phase.schema';
+import { Unit } from '../unit/schema/unit.schema';
+import { Pond } from '../pond/schema/Pond.schema';
+import { addphase } from './schemas/phase.dto';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class PhaseService {
-  constructor(@InjectModel(Phase.name) private readonly phaseModel: Model<PhaseDocument>) {}
+  constructor(
+    @InjectModel(Phase.name) private phaseModel: Model<Phase>,
+    @InjectModel(Unit.name) private unitModel: Model<Unit>,
+    @InjectModel(Pond.name) private pondModel: Model<Pond>,
+  ) {}
+  async createPhase(createPhaseDto: addphase) {
+    const { numberOfUnits, unitSurfaceArea, numberLines, pondLine, pondArea } = createPhaseDto;
 
-  async createPhase(dto: CreatePhaseDto) {
     const phaseCount = await this.phaseModel.countDocuments();
-    const phaseNumber = phaseCount + 1;
-    const phaseName = `Ph${phaseNumber}`;
+    const phaseName = `Ph${phaseCount + 1}`;
+    const phase = new this.phaseModel({ name: phaseName });
+
+    for (let i = 1; i <= numberOfUnits; i++) {
+      const unitN = `U${i}`;
+      const unitName = `${phaseName}-U${i}`;
+      const unit = new this.unitModel({ Units:unitN,name: unitName, surfaceArea: unitSurfaceArea });
+
+      for (let j = 1; j <= numberLines; j++) {
+        for (let k = 1; k <= pondLine; k++) {
+          const pondName = `${unitName}-L${j}-P${k}`;
+          const pond = new this.pondModel({ name: pondName, area: pondArea });
+          await pond.save();
+          unit.ponds.push(pond);
+        }
+      }
+      await unit.save();
+      phase.units.push(unit);
+    }
+    await phase.save();
+    return phase;
+  }
+
+
+ async phasedetaied(idphase:string){
+const phase=await this.phaseModel.findById(idphase).populate({path:'units'})
+
+ if(!phase){
+  throw new NotFoundException('phase  not found ')
+ }
+ return {
+  phaseName: phase.name,
+ Units:phase.units.map((unit)=>( {
+ id:unit._id,
+  Unit:unit.Units
+}))
 
    
-    const unitNames = Array.from({ length: dto.numberOfUnits }, (_, i) => `Unit${i + 1}`);
-    
-    const newPhase = new this.phaseModel({
-      phaseName,
-      numberOfUnits: dto.numberOfUnits,
-      units: unitNames,
-    });
+  
+};
+ }
 
-    return newPhase.save().then(() => ({
-      message: 'new phases created',
-      phase: newPhase,
-    }));
-  }
 }

@@ -1,13 +1,25 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PhaseService } from './phase.service';
-import { CreatePhaseDto } from './schemas/phase.dto';
+import { addphase } from './schemas/phase.dto';
+import { create } from 'domain';
+import { get } from 'http';
 
 @Controller('phase')
 export class PhaseController {
   constructor(private readonly phaseService: PhaseService) {}
 
   @Post()
-  create(@Body() createPhaseDto: CreatePhaseDto) {
-    return this.phaseService.createPhase(createPhaseDto);
+  create(@Body() createPhaseDto: addphase) {
+   const phase= this.phaseService.createPhase(createPhaseDto);
+    return {
+      message: 'New phase is created',
+      phase,
   }
+  }
+@Get(':id')
+
+PhaseDetailed(@Param('id') id:string){
+const phasedetaied= this.phaseService.phasedetaied(id);
+return phasedetaied
+}
 }

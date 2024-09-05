@@ -6,7 +6,6 @@ import { Pond, PondSchema } from './schema/Pond.schema';
 
 @Module({
   imports:[MongooseModule.forFeature([{name:Pond.name,schema:PondSchema}])],
-  providers: [PondService],
-  controllers: [PondController]
+  exports:[MongooseModule]
 })
 export class PondModule {}
