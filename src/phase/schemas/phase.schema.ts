@@ -1,18 +1,14 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-
-export type PhaseDocument = Phase & Document;
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose'; // Import Types from mongoose
+import { Unit } from '../../unit/schema/unit.schema';
 
 @Schema()
-export class Phase {
-  @Prop({ required: true })
-  phaseName: string;
+export class Phase extends Document {
+  @Prop()
+  name: string; 
 
-  @Prop({ required: true })
-  numberOfUnits: number;
-
-  @Prop({ type: [String], required: true })
-  units: string[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Unit' }] }) 
+  units: Unit[];
 }
 
 export const PhaseSchema = SchemaFactory.createForClass(Phase);

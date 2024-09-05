@@ -1,7 +1,26 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class CreatePhaseDto {
+export class addphase {
+
+
+
+  @IsNotEmpty()
+  @IsInt()
+  numberOfUnits: number;
+
   @IsNotEmpty()
   @IsNumber()
-  numberOfUnits: number;
+  unitSurfaceArea: number;
+
+  @IsNotEmpty()
+  @IsInt()
+  numberLines: number;
+
+  @IsNotEmpty()
+  @IsInt()
+  pondLine: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  pondArea: number;
 }
