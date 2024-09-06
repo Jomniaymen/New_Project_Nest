@@ -1,14 +1,12 @@
 // add-units.dto.ts
 import { IsNumber, IsNotEmpty } from 'class-validator';
 
-export class AddUnitsDto {
-    @IsNumber()
-    @IsNotEmpty()
-    numberOfUnits: number;
+export class editUnitdto {
+ 
 
     @IsNumber()
     @IsNotEmpty()
-    unitSurfaceArea: number; // In hectares
+    unitSurfaceArea: number; 
 
     @IsNumber()
     @IsNotEmpty()
@@ -20,5 +18,5 @@ export class AddUnitsDto {
 
     @IsNumber()
     @IsNotEmpty()
-    pondArea: number; // In m²
+    pondArea: number; 
 }

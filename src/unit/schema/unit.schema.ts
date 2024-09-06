@@ -9,14 +9,19 @@ export class Unit extends Document {
   Units: string; 
   
   @Prop({ required: true })
-  name: string; // "Ph1-U1", "Ph1-U2", etc.
+  name: string; 
 
-  @Prop({ required: true })
-  surfaceArea: number; // in hectares
-
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Pond' }] })
+  @Prop({ })
+  surfaceArea: number; 
+  @Prop({  })
+  numberLines: number; 
+  @Prop({  })
+  pondLine: number; 
+  
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Unit' }] }) 
   ponds: Pond[];
-  static Units: any;
+
 }
+
 
 export const UnitSchema = SchemaFactory.createForClass(Unit);

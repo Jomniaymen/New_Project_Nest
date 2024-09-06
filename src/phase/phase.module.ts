@@ -10,6 +10,7 @@ import { PondModule } from 'src/pond/pond.module';
   imports:[MongooseModule.forFeature([{name:Phase.name,schema:PhaseSchema}]),  UnitModule,
   PondModule],
   providers: [PhaseService],
-  controllers: [PhaseController]
+  controllers: [PhaseController],
+  exports:[MongooseModule]
 })
 export class PhaseModule {}
