@@ -29,9 +29,9 @@ export class PhaseService {
       for (let j = 1; j <= numberLines; j++) {
         for (let k = 1; k <= pondLine; k++) {
           const pondName = `${unitName}-L${j}-P${k}`;
-          const pond = new this.pondModel({ name: pondName, area: pondArea });
-          await pond.save();
-          unit.ponds.push(pond);
+          const pond = new this.pondModel({ name: pondName, area: pondArea,pondline:pondLine,numberline:numberLines});
+        await pond.save()
+        unit.ponds.push(pond)
         }
       }
       await unit.save();
@@ -43,7 +43,7 @@ export class PhaseService {
 
 
  async phasedetaied(idphase:string){
-const phase=await this.phaseModel.findById(idphase).populate({path:'units'})
+const phase=await this.phaseModel.findById(idphase).populate('units')
 
  if(!phase){
   throw new NotFoundException('phase  not found ')
@@ -54,10 +54,17 @@ const phase=await this.phaseModel.findById(idphase).populate({path:'units'})
  id:unit._id,
   Unit:unit.Units
 }))
-
-   
-  
 };
  }
-
+ async deletephase(idphase:string){
+ const deletep=await this.phaseModel.findById(idphase).populate('units')
+const units=deletep.units;
+const unitIds = units.map(unit => unit._id);
+ await this.pondModel.deleteMany({unit:{$in:unitIds}})
+ console.log('Ponds deleted');
+ await this.unitModel.deleteMany({ _id: { $in: unitIds } });
+ console.log('unit deleted');
+ await this.phaseModel.deleteOne({_id:idphase})
+ console.log('phase deleted');
+}
 }

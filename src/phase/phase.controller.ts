@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { PhaseService } from './phase.service';
 import { addphase } from './schemas/phase.dto';
 import { create } from 'domain';
@@ -21,5 +21,13 @@ export class PhaseController {
 PhaseDetailed(@Param('id') id:string){
 const phasedetaied= this.phaseService.phasedetaied(id);
 return phasedetaied
+}
+@Delete(':id')
+Deletephase(@Param('id') id:string ){
+  const phasedeleted=this.phaseService.deletephase(id);
+  return {
+    message:'phase deleted',
+    phasedeleted
+  }
 }
 }
