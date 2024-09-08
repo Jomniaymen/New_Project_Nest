@@ -18,9 +18,7 @@ async addunits(phaseid: string, dto: AddUnitsDto) {
     const { numberOfUnits, unitSurfaceArea, numberLines, pondLine, pondArea } = dto;
 
     const Phase = await this.phasmodel.findById(phaseid);
-    if (!Phase) {
-        throw new Error('Phase not found'); 
-    }
+  
 
     for (let i = 1; i <= numberOfUnits; i++) {
         const unitN = `U${Phase.units.length + 1}`; 
