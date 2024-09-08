@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PhaseService } from './phase.service';
+import { PhaseService } from '../pond/phase.service';
 import { PhaseController } from './phase.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Phase, PhaseSchema } from './schemas/phase.schema';

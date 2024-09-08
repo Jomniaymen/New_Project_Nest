@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UnitService } from './unit.service';
 import { AddUnitsDto } from './schema/unit.dto';
 import { editUnitdto } from './schema/editUnit.dto';
@@ -16,7 +16,14 @@ return this.unitService.addunits(id,dto)
 return this.unitService.viewunit(id)
     }
     @Put(':id/edit')
-    async editUnit(@Param('id') unitId: string, @Body() editUnitDto: editUnitdto): Promise<string> {
-        return await this.unitService.editUnit(unitId, editUnitDto);
+    async editUnit(@Param('id') unitId: string, @Body() editUnitDto: editUnitdto){
+      await this.unitService.editUnit(unitId, editUnitDto);
+      return {message:'units updated',
+
     }
+}
+@Delete(':id')
+async deleteunits(@Param('id') id:string){
+    await this.unitService.deleteunits(id)
+}
 }

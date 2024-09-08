@@ -3,6 +3,9 @@ import { Document, Types } from 'mongoose';
 
 @Schema()
 export class Pond extends Document {
+  static map(arg0: (pond: any) => any) {
+    throw new Error('Method not implemented.');
+  }
   @Prop({ required: true })
   name: string; 
 

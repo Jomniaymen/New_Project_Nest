@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { PhaseService } from './phase.service';
+import { PhaseService } from '../pond/phase.service';
 import { addphase } from './schemas/phase.dto';
 import { create } from 'domain';
 import { get } from 'http';
@@ -19,7 +19,7 @@ export class PhaseController {
 @Get(':id')
 
 PhaseDetailed(@Param('id') id:string){
-const phasedetaied= this.phaseService.phasedetaied(id);
+const phasedetaied= this.phaseService.phasedetailed(id);
 return phasedetaied
 }
 @Delete(':id')
