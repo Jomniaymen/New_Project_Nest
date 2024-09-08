@@ -1,6 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose'; // Import Types from mongoose
 import { Unit } from '../../unit/schema/unit.schema';
+import { Pond } from 'src/pond/schema/Pond.schema';
 
 @Schema()
 export class Phase extends Document {
@@ -9,6 +10,7 @@ export class Phase extends Document {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Unit' }] }) 
   units: Unit[];
+
 }
 
 export const PhaseSchema = SchemaFactory.createForClass(Phase);
