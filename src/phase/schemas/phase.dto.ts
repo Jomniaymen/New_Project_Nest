@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, isNumber, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class addphase {
 
@@ -13,11 +13,11 @@ export class addphase {
   unitSurfaceArea: number;
 
   @IsNotEmpty()
-  @IsInt()
+  @IsNumber()
   numberLines: number;
 
   @IsNotEmpty()
-  @IsInt()
+  @IsNumber()
   pondLine: number;
 
   @IsNotEmpty()

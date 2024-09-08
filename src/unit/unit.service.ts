@@ -64,20 +64,22 @@ async viewunit(unitid:string){
         pondarea:pond.area,
         pondLine:pond.pondLine,
         lines:pond.numberLines
-        }))
-        
+        }))  
     }
 }
+async editUnit(id: string, editUnitDto: editUnitdto ) {
+    const updatedUnit = await this.unitmodel.findByIdAndUpdate(id, editUnitDto, { new: true });   
+    return updatedUnit
 
-async editUnit(id: string, editUnitDto: editUnitdto ): Promise<string> {
-    const updatedUnit = await this.unitmodel.findByIdAndUpdate(id, editUnitDto, { new: true });
-    
-  
-
-    return 'Unit name is edited'; 
 }
+async deleteunits(id: string){
+    const deletep=await this.unitmodel.findById(id).populate('ponds')
 
-    
+const ponds=deletep.ponds
+const pondid=ponds.map((pond=>pond._id))
+await this.unitmodel.deleteOne({_id:id})
+await this.pondmodel.deleteMany({_id:{$in:pondid}})
+} 
    
 
 
