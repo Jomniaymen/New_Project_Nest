@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { privateDecrypt } from 'crypto';
 import { Model } from 'mongoose';
-import { Phase } from 'src/phase/schemas/phase.schema';
 import { Unit } from './schema/unit.schema';
 import { Pond } from 'src/pond/schema/Pond.schema';
 import { AddUnitsDto } from './schema/unit.dto';
 import { editUnitdto } from './schema/editUnit.dto';
+import { Phase } from 'src/phase/schemas/phase.schema';
 
 @Injectable()
 export class UnitService {
@@ -18,9 +18,7 @@ async addunits(phaseid: string, dto: AddUnitsDto) {
     const { numberOfUnits, unitSurfaceArea, numberLines, pondLine, pondArea } = dto;
 
     const Phase = await this.phasmodel.findById(phaseid);
-    if (!Phase) {
-        throw new Error('Phase not found'); 
-    }
+  
 
     for (let i = 1; i <= numberOfUnits; i++) {
         const unitN = `U${Phase.units.length + 1}`; 
