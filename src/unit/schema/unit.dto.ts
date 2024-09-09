@@ -8,7 +8,7 @@ export class AddUnitsDto {
 
     @IsNumber()
     @IsNotEmpty()
-    unitSurfaceArea: number; // In hectares
+    unitSurfaceArea: number; 
 
     @IsNumber()
     @IsNotEmpty()
@@ -20,5 +20,5 @@ export class AddUnitsDto {
 
     @IsNumber()
     @IsNotEmpty()
-    pondArea: number; // In m²
+    pondArea: number; 
 }
